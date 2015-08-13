@@ -5,4 +5,4 @@
 > __Theatre__ scans your folders to find movies you have on your disk(s).
 > It then displays them with information about each so you can select the correct one for your movie night.
 
-Built with :heart: using [Atom's Electron](https://github.com/atom/electron) (Atom Shell) and a bunch of open source projects :octocat:
+Built with :heart: using [Atom's Electron](https://github.com/atom/electron) (Atom Shell) and a bunch of great open source projects :octocat:
