@@ -1,0 +1,2 @@
+{"$$indexCreated":{"fieldName":"imdb_id","unique":true,"sparse":false}}
+{"$$indexCreated":{"fieldName":"path","unique":true,"sparse":false}}

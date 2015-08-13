@@ -1,0 +1,40 @@
+{
+  "name": "underscore-plus",
+  "homepage": "https://github.com/atom/underscore-plus",
+  "authors": [
+    "Kevin Sawicki <kevinsawicki@gmail.com>",
+    "Matt Colyer <matt@colyer.name>",
+    "benogle <ogle.ben@gmail.com>",
+    "nathansobo <nathan@github.com>"
+  ],
+  "description": "Underscore with some extensions",
+  "main": "./dist/underscore-plus.js",
+  "keywords": [
+    "underscore"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "spec",
+    "src",
+    "lib",
+    "Gruntfile.coffee",
+    "package.json"
+  ],
+  "dependencies": {
+    "underscore": "1.x"
+  },
+  "version": "1.6.6",
+  "_release": "1.6.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.6.6",
+    "commit": "39f675b3d5393acfb3a317cbfd77ce6080a163ba"
+  },
+  "_source": "git://github.com/atom/underscore-plus.git",
+  "_target": "~1.6.6",
+  "_originalSource": "underscore-plus",
+  "_direct": true
+}
