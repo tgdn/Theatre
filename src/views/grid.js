@@ -10,7 +10,8 @@ views.Grid = Backbone.View.extend({
     }),
 
     template: _.template('\
-    <% collection.each(function(model) { %>\
+    <% collection.each(function(model) {\
+        model.view.render(); %>\
         <%= model.view.$el.prop("outerHTML") %>\
     <% }); %>\
     <% for (var i = 0; i < itemsLeft; i++) { %>\
@@ -21,11 +22,15 @@ views.Grid = Backbone.View.extend({
     initialize: function() {
         var _this = this;
 
-        this.collection.bind('add', function(model) {
-            _this.modelAdded(model);
-        });
-        this.collection.bind('remove', function(model) {
-            _this.modelRemoved(model);
+        // this.collection.bind('add', function(model) {
+        //     _this.modelAdded(model);
+        // });
+        // this.collection.bind('remove', function(model) {
+        //     _this.modelRemoved(model);
+        // });
+
+        this.collection.bind('add remove change', function(model) {
+            _this.render();
         });
 
         this.render();
