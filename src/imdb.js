@@ -9,7 +9,7 @@ var response = 'json';
 var plot = 'full';
 
 imdb.parseFilename = function(filename) {
-    // this is what we should test (remove extname)
+    // this is what we should test (remove extension)
     // movie.file.avi => movie.file
     var basename = path.basename(filename, path.extname(filename));
 
@@ -18,11 +18,13 @@ imdb.parseFilename = function(filename) {
     basename = basename.replace(/\./g, ' ');
 
     // the filename might not comply
+    // TODO: make it better
     try {
         var extracted = basename.match( /(.)*(\s)(\d){4}/g )[0];
         var year = extracted.match( /(\d){4}/g )[0];
         var title = extracted.replace( /(\d){4}/g , '').trim();
     } catch (err) {
+        console.debug('Regex error: ' + err);
         return undefined;
     }
     return {
@@ -41,11 +43,35 @@ var makeRequest = function(url, done) {
             //throw error || 'Response was ' + response.statusCode;
             deferred.reject(error || statusCode);
         } else {
-            deferred.resolve(response, body);
+            deferred.resolve({ response: response, body: body });
         }
         //done(error, response, body);
     });
     return deferred.promise.nodeify(done);
+}
+
+imdb.find = function(filename) {
+    var deferred = Q.defer();
+    var parsed = imdb.parseFilename(filename);
+
+    if (parsed == undefined) {
+        deferred.reject("Filename did not match");
+    }
+    var title = parsed.title;
+    var year = parsed.year;
+
+    imdb.search(title, year)
+        .then(function(data) {
+            return imdb.getById(data.Search[0].imdbID);
+        }, function(err) {
+            deferred.reject(err);
+        })
+        .then(function(data) {
+            deferred.resolve(data);
+        }, function(err) {
+            deferred.reject(err)
+        })
+    return deferred.promise;
 }
 
 imdb.search = function(text, year, done) {
@@ -55,8 +81,8 @@ imdb.search = function(text, year, done) {
     else url = base_url.concat('s=', text, '&r=', response);
 
     makeRequest(url)
-    .then(function(response, body) {
-        var parsed = JSON.parse(body);
+    .then(function(result) {
+        var parsed = JSON.parse(result.body);
         deferred.resolve(parsed);
     }, function(error) {
         deferred.reject(error);
@@ -78,8 +104,8 @@ imdb.getById = function(id, done) {
     var deferred = Q.defer();
 
     makeRequest(url)
-    .then(function(response, body) {
-        var parsed = JSON.parse(body);
+    .then(function(result) {
+        var parsed = JSON.parse(result.body);
         deferred.resolve(parsed);
     }, function(error) {
         deferred.reject(error);
@@ -104,8 +130,8 @@ imdb.getByTitle = function(title, year, done) {
     else url = base_url.concat('t=', title, '&r=', response);
 
     makeRequest(url)
-    .then(function(response, body) {
-        var parsed = JSON.parse(body);
+    .then(function(result) {
+        var parsed = JSON.parse(result.body);
         deferred.resolve(parsed);
     }, function(error) {
         deferred.reject(error);

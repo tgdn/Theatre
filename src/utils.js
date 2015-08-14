@@ -1,5 +1,7 @@
 'use strict'
 
+var fs = require('fs');
+
 util.getFileSize = function(location) {
     var size;
     var st = fs.statSync(location);
@@ -7,11 +9,10 @@ util.getFileSize = function(location) {
         return 0;
     }
 
-    var sizeM = stat.size / 1.0e6
+    var sizeM = st.size / 1.0e6
     size = sizeM + 'MB';
     if (sizeM > 1024.0) {
         size = sizeM / 1024.0 + 'GB';
     }
-    console.debug('size: '+size);
     return size;
 }
