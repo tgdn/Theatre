@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore-plus');
+var Q = require('q');
 
 var dirsFile = __dirname + '/../preferences/dirs.txt';
 var acceptedExt = ['.avi', '.mp4', '.mpg', '.ogg', '.mkv'];
@@ -11,12 +12,15 @@ var unauthaurizedExt = ['.theater', '.imovielibrary', '.DS_Store'];
 
 var walk = function(dir, done) {
     var results = [];
+    var deferred = Q.defer();
 
     fs.readdir(dir, function(err, list) {
-        if (err) return done(err);
+        //if (err) return done(err);
+        if (err) deferred.reject(err);
 
         var pending = list.length;
-        if (!pending) return done(null, results);
+        //if (!pending) return done(null, results);
+        if (!pending) deferred.resolve(results)
 
         list.forEach(function(file) {
             file = path.resolve(dir, file);
@@ -26,7 +30,8 @@ var walk = function(dir, done) {
                     // no need to walk unnecessary files
                     if (checkFile(file) != file) {
                         if (!--pending) {
-                            done(null, results);
+                            //done(null, results);
+                            deferred.resolve(results);
                         }
                         return;
                     }
@@ -34,7 +39,8 @@ var walk = function(dir, done) {
                     walk(file, function(err, res) {
                         results = results.concat(res);
                         if (!--pending) {
-                            done(null, results);
+                            //done(null, results);
+                            deferred.resolve(results)
                         }
                     });
                     // file
@@ -43,12 +49,15 @@ var walk = function(dir, done) {
                         results.push(file);
                     }
                     if (!--pending) {
-                        done(null, results);
+                        //done(null, results);
+                        deferred.resolve(results)
                     }
                 }
             });
         });
+
     });
+    return deferred.promise.nodeify(done);
 }
 
 var checkFile = function(file, fileCheck) {
@@ -76,16 +85,35 @@ var checkFile = function(file, fileCheck) {
 }
 
 util.getFilms = function(done) {
-    var dirs = Settings.filesLocations || [];
+    console.log('getting films');
 
-    dirs.forEach(function(dir) {
+    var dirs = Settings.filesLocations || [];
+    //dirs.push(null); // so we can check it is last
+    var r = []; // results
+    var deferred = Q.defer();
+
+    dirs.forEach(function(dir, i) {
+
         // skip dirs starting with "#"
+        // NOTE: not used anymore
         if (dir.lastIndexOf('#', 0) === 0) return;
 
-        walk(dir, function(err, results) {
+        /*walk(dir, function(err, results) {
             if (err) throw err;
             done(results);
-        });
-    });
+        });*/
 
+        walk(dir)
+            .then(function(results) {
+                // deferred.resolve(results);
+                r = r.concat(results);
+                if (i+1 == dirs.length) {
+                    deferred.resolve(r);
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+            });
+    });
+    return deferred.promise.nodeify(done);
 }

@@ -14,8 +14,12 @@ var isFullscreen = false;
 
 window.onload = function() {
 
-    var WindowData = new models.Window
-    var Window = new views.Window({ model: WindowData });
+    App.WindowData = new models.Window
+    App.Window = new views.Window({ model: App.WindowData });
+
+    // init views
+    var Settings = new views.Settings;
+    App.Window.addView('settings', Settings);
 
     ipc.send('ready');
 
@@ -48,11 +52,29 @@ window.onload = function() {
         }
     });
 
-    util.getFilms(function(films) {
-        films.forEach(function(film) {
-            filmLib.add(new models.Film(film));
+    // util.getFilms(function(films) {
+    //     films.forEach(function(err, film) {
+    //         filmLib.add(new models.Film(film));
+    //         debugger;
+    //     });
+    // });
+
+    while (Settings.isReady == false) {
+        console.debug('waiting');
+    }
+
+    util.getFilms()
+        .then(function(films) {
+            console.debug('finished loading films');
+            console.debug(films)
+            films.forEach(function(film) {
+                filmLib.add(new models.Film(film));
+            });
+        })
+        .catch(function(err) {
+            // close to null probability
+            console.error(err);
         });
-    });
 }
 
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var
+    App = {},
     db = {},
     collections = {},
     views = {},

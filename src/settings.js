@@ -1,12 +1,15 @@
 'use strict'
 
 var Settings = {};
-Settings.filesLocations = [];
+_.extend(Settings, Backbone.Events);
+
+Settings.isReady = false;
+//Settings.filesLocations = [];
 
 // setup default values
 
-var defaultMovieLocation = path.join(process.env.HOME || process.env.USERPROFILE || process.env.HOMEPATH, 'Movies');
-Settings.filesLocations.push(defaultMovieLocation);
+//var defaultMovieLocation = path.join(process.env.HOME || process.env.USERPROFILE || process.env.HOMEPATH, 'Movies');
+//Settings.filesLocations.push(defaultMovieLocation);
 
 
 Database.getSettings()
@@ -16,6 +19,7 @@ Database.getSettings()
     });
 
     Settings.filesLocations = _.uniq(Settings.filesLocations);
+    Settings.isReady = true;
 
 }, function(err) {
     console.error('error getting settings')

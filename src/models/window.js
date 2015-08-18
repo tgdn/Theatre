@@ -2,9 +2,9 @@
 
 models.Window = Backbone.Model.extend({
 
-    attributes: {
+    defaults: {
         'views': [],
-        'current': ''
+        'current': null,
     },
 
     // a @view is an Object containing two keys: key and and view
@@ -29,17 +29,20 @@ models.Window = Backbone.Model.extend({
     removeView: function(key) {
         var views = this.get('views');
 
-        views.forEach(function(v) {
+        _.each(this.get('views'), function(v) {
             if (v.key == key) {
                 // FIXME: check if it fails
                 views = _.without(views, v);
             }
-        })
+        });
+
+        this.set('views', views);
         return this;
     },
 
     setCurrent: function(key) {
-        this.set(key);
+        console.debug('setting current view: ' + key)
+        this.set('current', key);
         return this;
     },
 
