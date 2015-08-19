@@ -58,6 +58,81 @@ hr {
     background-color: #777;
 }
 
+input,
+.form-control {
+    border-radius: 3px;
+    border-color: lighten(@titlebarBackground, 40%);
+
+    &:focus,
+    &:active {
+        border-color: white;
+    }
+}
+
+/* buttons */
+.btn.th-btn {
+    font-size: 11px;
+    border-radius: 2px;
+    background-color: #636B7C;
+    border-color: #636B7C;
+    color: #ddd;
+    -webkit-app-region: no-drag;
+
+    &:hover,
+    &:active {
+        color: #fff;
+    }
+}
+
+/* font awesome sizing */
+
+.fa-1 {
+    font-size: 1em;
+}
+
+.fa-2 {
+    font-size: 2em;
+}
+
+.fa-3 {
+    font-size: 4em;
+}
+
+.fa-4 {
+    font-size: 7em;
+}
+
+.fa-5 {
+    font-size: 12em;
+}
+
+.table {
+    background: rgb(95, 108, 126);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgb(23, 43, 66);
+    box-shadow: inset 0 0 3px 0 rgb(74, 74, 74);
+
+    > thead > tr {
+        background-color: rgb(73, 82, 102, 0.8);
+    }
+
+    > thead,
+    > tbody,
+    > tfoot {
+        tr > th,
+        tr > td {
+            padding: 8px 12px;
+            border-top: 1px solid #748198;
+        }
+    }
+
+    > thead > tr > th {
+        border-bottom: 1px solid #576779;
+    }
+}
+
+
 .dropdown-menu {
     border-radius: 0 0 3px 3px;
     min-width: 100px;
@@ -193,6 +268,22 @@ ul.dropdown-menu:after {
 
         &:hover {
             color: #fff;
+        }
+    }
+}
+
+#header > ul > li.form {
+    input[type=text] {
+        border-radius: 30px;
+        height: 23px;
+        padding-left: 12px;
+        padding-right: 12px;
+        border-width: 0 !important;
+        background: rgb(86, 86, 97);
+
+        &:focus,
+        &:active {
+            background-color: white;
         }
     }
 }
@@ -403,6 +494,27 @@ ul.video-grid li.film-row {
 
 .settings-view {
     width: 90%;
+    height: 100%;
+    position: relative;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 40px;
+
+    .btn-close {
+        font-size: 12px;
+        margin-top: 1.5px;
+    }
+}
+
+.settings-view .dropzone {
+    height: 250px;
+    width: 100%;
+    border: 3px dashed lighten(@titlebarBackground, 40%);
+    border-radius: 4px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    cursor: pointer;
 }

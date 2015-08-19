@@ -41,6 +41,68 @@ hr {
   color: #777;
   background-color: #777;
 }
+input,
+.form-control {
+  border-radius: 3px;
+  border-color: #879aac;
+}
+input:focus,
+.form-control:focus,
+input:active,
+.form-control:active {
+  border-color: white;
+}
+/* buttons */
+.btn.th-btn {
+  font-size: 11px;
+  border-radius: 2px;
+  background-color: #636B7C;
+  border-color: #636B7C;
+  color: #ddd;
+  -webkit-app-region: no-drag;
+}
+.btn.th-btn:hover,
+.btn.th-btn:active {
+  color: #fff;
+}
+/* font awesome sizing */
+.fa-1 {
+  font-size: 1em;
+}
+.fa-2 {
+  font-size: 2em;
+}
+.fa-3 {
+  font-size: 4em;
+}
+.fa-4 {
+  font-size: 7em;
+}
+.fa-5 {
+  font-size: 12em;
+}
+.table {
+  background: #5f6c7e;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #172b42;
+  box-shadow: inset 0 0 3px 0 #4a4a4a;
+}
+.table > thead > tr {
+  background-color: #495266;
+}
+.table > thead tr > th,
+.table > tbody tr > th,
+.table > tfoot tr > th,
+.table > thead tr > td,
+.table > tbody tr > td,
+.table > tfoot tr > td {
+  padding: 8px 12px;
+  border-top: 1px solid #748198;
+}
+.table > thead > tr > th {
+  border-bottom: 1px solid #576779;
+}
 .dropdown-menu {
   border-radius: 0 0 3px 3px;
   min-width: 100px;
@@ -159,6 +221,18 @@ ul.dropdown-menu:after {
 #header > ul > li > a:hover,
 #header .tabs-list > li > a[aria-expanded=true] {
   color: #fff;
+}
+#header > ul > li.form input[type=text] {
+  border-radius: 30px;
+  height: 23px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-width: 0 !important;
+  background: #565661;
+}
+#header > ul > li.form input[type=text]:focus,
+#header > ul > li.form input[type=text]:active {
+  background-color: white;
 }
 #header .tabs-list > li > a {
   padding-left: 20px;
@@ -322,6 +396,25 @@ ul.video-grid li.film-row .title {
 }
 .settings-view {
   width: 90%;
+  height: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 40px;
+}
+.settings-view .btn-close {
+  font-size: 12px;
+  margin-top: 1.5px;
+}
+.settings-view .dropzone {
+  height: 250px;
+  width: 100%;
+  border: 3px dashed #879aac;
+  border-radius: 4px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: center;
+  cursor: pointer;
 }

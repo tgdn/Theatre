@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore-plus');
 var Q = require('q');
+var spawn = require('child_process').spawnSync;
 
 var dirsFile = __dirname + '/../preferences/dirs.txt';
 var acceptedExt = ['.avi', '.mp4', '.mpg', '.ogg', '.mkv'];
@@ -92,16 +93,21 @@ util.getFilms = function(done) {
     var r = []; // results
     var deferred = Q.defer();
 
-    dirs.forEach(function(dir, i) {
+    var python_file = path.resolve( path.join('src', 'film_matcher.py') );
+
+    var str_args = dirs.join(' ');
+    var cmd = spawn('python', [python_file, str_args]);
+    var raw = cmd.stdout.toString();
+    var result = JSON.parse(raw);
+    deferred.resolve(result.films)
+    // console.log(result['films']);
+
+
+    /*dirs.forEach(function(dir, i) {
 
         // skip dirs starting with "#"
         // NOTE: not used anymore
         if (dir.lastIndexOf('#', 0) === 0) return;
-
-        /*walk(dir, function(err, results) {
-            if (err) throw err;
-            done(results);
-        });*/
 
         walk(dir)
             .then(function(results) {
@@ -114,6 +120,9 @@ util.getFilms = function(done) {
             .catch(function(err) {
                 console.error(err);
             });
-    });
+    });*/
+
+    // get videos
+
     return deferred.promise.nodeify(done);
 }

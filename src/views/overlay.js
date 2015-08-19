@@ -9,7 +9,7 @@ views.Overlay = Backbone.View.extend({
 
     render: function() {
         // TODO add attributes
-        this.$el.html(this.template({}));
+        this.$el.html(this.template(global));
         return this;
     }
 });

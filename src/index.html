@@ -16,11 +16,39 @@
             var jQuery = $;
             var _ = require('underscore-plus');
             var Backbone = require('backbone');
+
+            $(".dragzone").on("dragover", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                $(this).addClass('dragging');
+            });
+
+            $(".dragzone").on("dragleave", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                $(this).removeClass('dragging');
+            });
+
+            $(".dragzone").on("drop", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                alert("Dropped!");
+            });
+
         </script>
 
         <style type="text/css">
             .grid-container {
                 width: calc(100% - 1px);
+            }
+
+            .overlay-view {
+                height: calc(100% - 40px);
+
+            }
+
+            .overlay-view > div {
+                height: calc(100% - 20px);
             }
         </style>
 
@@ -75,6 +103,9 @@
                 </ul>
 
                 <ul class="header-nav pull-right">
+                    <li class="form">
+                        <input type="text" placeholder="Search" class="form-control input-sm" name="q">
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Genre

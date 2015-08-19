@@ -2,26 +2,51 @@
 
 views.Settings = views.Overlay.extend({
 
+    events: {
+        "dragover .dropzone": function(e) { console.log('dragover');return false; },
+        "dragleave .dropzone": function(e) { return false; },
+        "drop .dropzone": "fileDropped",
+    },
+
+    fileDropped: function(e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0];
+        console.log('File you dragged here is', file.path);
+        return false;
+    },
+
     template: _.template(`
     <div class="settings-view">
-        <h2>Settings</h2>
+        <h2>
+            Settings
+            <button class="btn-close btn th-btn btn-sm pull-right" data-toggle="view">Close</button>
+        </h2>
 
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                </div>
+        <div class="form-group">
+            <div class="dropzone">
+                <i class="fa fa-4 fa-folder-open"></i>
+                <h3>Drop folders here to add to movie inspection</h3>
             </div>
         </div>
 
-        <button class="btn btn-default btn-sm pull-right" data-toggle="view">Close</button>
+        <div class="form-group">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 80%;">Path</th>
+                        <th>Files found</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% _.each(Settings.filesLocations, function(location) { %>
+                    <tr>
+                        <td><%= location %></td>
+                        <td>unknown</td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
     </div>
     `)
 

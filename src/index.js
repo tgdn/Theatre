@@ -12,6 +12,18 @@ var appmenu_template = require('./menus').appmenu_template;
 var appRoot = './';
 var isFullscreen = false;
 
+ipc.on('add-to-playlist', function (links) {
+    console.log(links)
+  // links.forEach(function (link) {
+  //   if (/\.(vtt|srt)$/i.test(link)) {
+  //     fs.createReadStream(link).pipe(vtt()).pipe(concat(onsubs))
+  //     return
+  //   }
+  //
+  //   list.add(link, printError)
+  // })
+})
+
 window.onload = function() {
 
     App.WindowData = new models.Window
