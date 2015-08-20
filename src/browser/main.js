@@ -17,6 +17,20 @@ app.on('window-all-closed', function() {
     app.quit();
 });
 
+var onopen = function (e, lnk) {
+  e.preventDefault()
+
+  if (ready) {
+    mainWin.send('add-to-playlist', [].concat(lnk))
+    return
+  }
+
+  link = lnk
+}
+
+app.on('open-file', onopen)
+app.on('open-url', onopen)
+
 var frame = process.platform === 'win32';
 
 app.on('ready', function() {
@@ -45,6 +59,11 @@ app.on('ready', function() {
 
     ipc.on('close', function() {
         app.quit();
+    });
+
+    ipc.on('open-file-dialog', function () {
+        var files = dialog.showOpenDialog({ properties: [ 'openFile', 'multiSelections' ]})
+        if (files) mainWin.send('add-to-playlist', files)
     });
 
     ipc.on('minimize', function() {

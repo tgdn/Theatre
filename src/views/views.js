@@ -8,18 +8,19 @@ views.FilmRow = Backbone.View.extend({
 
     tagName: 'li',
     className: 'film-row',
+    id: util.guid(),
 
     events: {
     },
 
-    template: _.template('\
-        <div class="poster">\
-            <% if (poster != "") { %>\
-            <img src="<%= poster %>">\
-            <% } %>\
-        </div>\
-        <span class="title"><%= displayTitle %></span>\
-    '),
+    template: _.template(`
+        <div class="poster">
+            <% if (poster != "") { %>
+            <img src="<%= poster %>">
+            <% } %>
+        </div>
+        <span class="title"><%= displayTitle %></span>
+    `),
 
     initialize: function() {
         this.render();

@@ -2,31 +2,29 @@
 
 var ipc = require('ipc');
 var remote = require('remote');
+var events = require('events');
 var titlebar = require('titlebar');
 var Menu = remote.require('menu');
 var appmenu_template = require('./menus').appmenu_template;
 
 views.Window = Backbone.View.extend({
 
-
     el: $('body'),
     titlebar_el: '#titlebar',
-
-    content: $('#content'),
-    $content: $(this.content),
+    current: null,
 
     use_titlebar: process.platform !== 'win32',
     titlebar: titlebar(),
     titlebar_ready: false,
 
-    titlebar_inner_template: _.template('\
-        <div class="title">\
-            <%= title %>\
-        </div>\
-        <!--<button class="btn btn-info btn-sm add-folder">\
-            Add folders\
-        </button>-->\
-    '),
+    titlebar_inner_template: _.template(`
+        <div class="title">
+            <%= title %>
+        </div>
+        <!--<button class="btn btn-info btn-sm add-folder">
+            Add folders
+        </button>-->
+    `),
 
     fullscreen: false,
 
@@ -37,11 +35,24 @@ views.Window = Backbone.View.extend({
     events: {
         "dblclick #titlebar .add-folder": "addFolderDblClick",
         "click #titlebar .add-folder": "addFolderClick",
+        "click *[data-toggle=view]": "openView",
     },
 
     initialize: function() {
+        var _this = this;
 
-        this.model.bind('change:current', this.render);
+        this.content = $('.main-window-region');
+        this.$content = $(this.content);
+
+        this.on('rendering', function() {
+            console.log('yes -rendering')
+        })
+
+        this.model.on('change:current', function() {
+            _this.render();
+        });
+        //this.model.bind('add', this.viewAdded, this);
+        //this.model.bind('remove', this.viewRemoved, this);
 
         this.setupTitlebar();
         this.setupMenus();
@@ -52,14 +63,33 @@ views.Window = Backbone.View.extend({
 
     render: function() {
 
-        // content
-        var view = this.model.getCurrent();
+        this.trigger('rendering');
 
-        if (view != null) {
-            view.render();
-            this.$content.html(view.$el);
+        // content
+        var view = null;
+        var oldView = this.current;
+        var current = this.model.getCurrent();
+
+        if (current != null) {
+            view = current.view;
+        }
+        this.current = view;
+
+        if (oldView != null && oldView != view) {
+            $('#' + oldView.id).remove();
         }
 
+        // nothing needs to change
+        if (oldView === view || view == null) {
+            return this;
+        }
+
+        // when a new view is displayed
+        // remove previous view from DOM
+
+        // render and append view to DOM
+        view.render();
+        this.$content.append(view.$el.prop('outerHTML'));
     },
 
     addFolderDblClick: function(e) {
@@ -71,6 +101,12 @@ views.Window = Backbone.View.extend({
 
     addFolderClick: function(e) {
         console.log('clicked');
+    },
+
+    openView: function(e) {
+        var target = e.currentTarget;
+        var view_key = $(target).attr('data-view') || null;
+        this.setCurrent(view_key);
     },
 
     addView: function(key, view) {
