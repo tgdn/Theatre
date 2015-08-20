@@ -8,7 +8,6 @@ views.FilmRow = Backbone.View.extend({
 
     tagName: 'li',
     className: 'film-row',
-    id: util.guid(),
 
     events: {
     },

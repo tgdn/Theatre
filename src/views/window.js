@@ -18,9 +18,9 @@ views.Window = Backbone.View.extend({
     titlebar_ready: false,
 
     titlebar_inner_template: _.template(`
-        <div class="title">
+        <!--<div class="title">
             <%= title %>
-        </div>
+        </div>-->
         <!--<button class="btn btn-info btn-sm add-folder">
             Add folders
         </button>-->
@@ -54,7 +54,7 @@ views.Window = Backbone.View.extend({
         //this.model.bind('add', this.viewAdded, this);
         //this.model.bind('remove', this.viewRemoved, this);
 
-        this.setupTitlebar();
+        //this.setupTitlebar();
         this.setupMenus();
         this.setupEvents();
 

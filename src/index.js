@@ -26,8 +26,12 @@ ipc.on('add-to-playlist', function (links) {
 
 window.onload = function() {
 
+    $('body').addClass(process.platform);
+
     App.WindowData = new models.Window
     App.Window = new views.Window({ model: App.WindowData });
+
+    App.Titlebar = new views.Titlebar;
 
     // init views
     var Settings = new views.Settings;
