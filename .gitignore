@@ -28,6 +28,7 @@ build/Release
 node_modules
 *.db
 bin
+main.css
 
 # OS X
 .DS_Store
