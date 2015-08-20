@@ -224,18 +224,97 @@ ul.dropdown-menu:after {
 
 .titlebar-stoplight {
     position: relative;
-    left: 4px;
+    left: 6px;
 }
 
 .titlebar-close,
 .titlebar-minimize,
 .titlebar-fullscreen {
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin-top: 16px;
+    margin-bottom: 16px;
 
 }
 
-#header {
+#titlebar {
+    position: relative;
+    box-shadow: 0 5px 6px #212930;
+    z-index: 2; // for drop shadow
+
+    #header {
+        background-color: transparent;
+        -webkit-app-region: drag;
+        //box-shadow: 0 5px 6px #212930;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    #header > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        float:left;
+
+        & > li {
+            display: inline-block;
+        }
+
+        & > li > a {
+            -webkit-app-region: no-drag;
+            display: block;
+            padding-left: 14px;
+            padding-right: 14px;
+            padding-top: 15px;
+            padding-bottom: 8px;
+            font-size: 13px;
+            border-bottom: 3px solid transparent;
+            color: #cecece;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    #header > ul > li.form {
+        input[type=text] {
+            border-radius: 30px;
+            height: 27px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-width: 0 !important;
+            background: rgb(86, 86, 97);
+            position: relative;
+            top: -1px;
+            color: #ccc;
+
+            &:focus,
+            &:active {
+                background-color: white;
+                color: #555;
+            }
+        }
+    }
+
+    #header .tabs-list > li > a {
+        padding-left: 18px;
+        padding-right: 18px;
+        &:hover {
+            border-color: lighten(@titlebarBackground, 40%);
+        }
+
+        &[aria-expanded=true] {
+            &:extend(#header > ul > li > a:hover all);
+            border-color: #fff;
+        }
+    }
+
+}
+
+/*#header {
     background-color: @titlebarBackground;
     -webkit-app-region: drag;
     box-shadow: 0 5px 6px #212930;
@@ -299,7 +378,7 @@ ul.dropdown-menu:after {
         &:extend(#header > ul > li > a:hover all);
         border-color: #fff;
     }
-}
+}*/
 
 /*.header-nav {
     list-style: none;
@@ -355,7 +434,7 @@ ul.dropdown-menu:after {
     height: 100%;
     //width: calc(100% - 5px);
     position: fixed;
-    top: 69px;
+    top: 44px;
     left: 0;
     text-align: center;
     overflow-x: hidden;
@@ -391,7 +470,7 @@ ul.dropdown-menu:after {
     }
     &::-webkit-scrollbar-track {
         margin-top: 0;
-        margin-bottom: 70px;
+        margin-bottom: 44px;
     }
 }
 
