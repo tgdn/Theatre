@@ -17,19 +17,19 @@
             var _ = require('underscore-plus');
             var Backbone = require('backbone');
 
-            $(".dragzone").on("dragover", function(event) {
+            $("document").on("dragover", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
                 $(this).addClass('dragging');
             });
 
-            $(".dragzone").on("dragleave", function(event) {
+            $("document").on("dragleave", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
                 $(this).removeClass('dragging');
             });
 
-            $(".dragzone").on("drop", function(event) {
+            $("document").on("drop", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
                 alert("Dropped!");
