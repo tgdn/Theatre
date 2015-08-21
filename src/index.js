@@ -35,7 +35,7 @@ window.onload = function() {
 
     // init views
     var Settings = new views.Settings;
-    App.Window.addView('settings', Settings);
+    //App.Window.addView('settings', Settings);
 
     ipc.send('ready');
 

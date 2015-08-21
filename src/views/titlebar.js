@@ -1,5 +1,6 @@
 'use strict'
 
+var ipc = require('ipc');
 var titlebar = require('titlebar');
 
 views.Titlebar = Backbone.View.extend({
@@ -72,6 +73,32 @@ views.Titlebar = Backbone.View.extend({
 
     initialize: function() {
         this.render();
+
+        // titlebar events
+        this.titlebar.on('close', function() {
+            ipc.send('close');
+        });
+
+        this.titlebar.on('minimize', function() {
+            ipc.send('minimize');
+        });
+
+        this.titlebar.on('maximize', function() {
+            ipc.send('maximize');
+        });
+
+        this.titlebar.on('fullscreen', function(e) {
+            // TODO : make it resizable
+            if (this.fullscreen) {
+                this.fullscreen = false;
+                $('#titlebar .titlebar-stoplight')[0].style.display = 'block';
+                ipc.send('exit-full-screen');
+            } else {
+                this.fullscreen = true;
+                $('#titlebar .titlebar-stoplight')[0].style.display = 'none';
+                ipc.send('enter-full-screen');
+            }
+        });
     },
 
     render: function() {
