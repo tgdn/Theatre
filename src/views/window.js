@@ -139,30 +139,6 @@ views.Window = Backbone.View.extend({
     },
 
     setupEvents: function() {
-        this.titlebar.on('close', function() {
-            ipc.send('close');
-        });
-
-        this.titlebar.on('minimize', function() {
-            ipc.send('minimize');
-        });
-
-        this.titlebar.on('maximize', function() {
-            ipc.send('maximize');
-        });
-
-        this.titlebar.on('fullscreen', function(e) {
-            // TODO : make it resizable
-            if (this.fullscreen) {
-                this.fullscreen = false;
-                $('#titlebar')[0].style.display = 'block';
-                ipc.send('exit-full-screen');
-            } else {
-                this.fullscreen = true;
-                $('#titlebar')[0].style.display = 'none';
-                ipc.send('enter-full-screen');
-            }
-        });
 
         $('#header a[data-toggle=tab]').on('show.bs.tab', function(e) {
             var target = e.target;

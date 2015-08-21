@@ -39,7 +39,7 @@ app.on('ready', function() {
         width: 1000,
         height: 750,
         "min-width": 835,
-        "min-height": 600,
+        "min-height": 500,
         "dark-theme": true,
         "enable-larger-than-screen": false,
         title: "Theatre",
