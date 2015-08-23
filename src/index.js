@@ -12,30 +12,24 @@ var appmenu_template = require('./menus').appmenu_template;
 var appRoot = './';
 var isFullscreen = false;
 
-ipc.on('add-to-playlist', function (links) {
-    console.log(links)
-  // links.forEach(function (link) {
-  //   if (/\.(vtt|srt)$/i.test(link)) {
-  //     fs.createReadStream(link).pipe(vtt()).pipe(concat(onsubs))
-  //     return
-  //   }
-  //
-  //   list.add(link, printError)
-  // })
-})
-
 window.onload = function() {
 
     $('body').addClass(process.platform);
 
-    App.WindowData = new models.Window
-    App.Window = new views.Window({ model: App.WindowData });
+    //App.WindowData = new models.Window
+    //App.Window = new views.Window({ model: App.WindowData });
 
+    React.render(
+        React.createElement(rviews.Window),
+        document.getElementById('content')
+    );
+
+    /*
     App.Titlebar = new views.Titlebar;
 
     // init views
     var Settings = new views.Settings;
-    //App.Window.addView('settings', Settings);
+    //App.Window.addView('settings', Settings);*/
 
     ipc.send('ready');
 
@@ -48,9 +42,9 @@ window.onload = function() {
     var videoLib = new collections.FilmLibrary();
 
     // init views
-    var moviesGrid = new views.Grid({ el: $('#movies-container > ul'), collection: movieLib });
-    var videosGrid = new views.Grid({ el: $('#videos-container > ul'), collection: videoLib });
-    var allGrid = new views.Grid({ el: $('#complete-collection-container > ul'), collection: filmLib });
+    // var moviesGrid = new views.Grid({ el: $('#movies-container > ul'), collection: movieLib });
+    // var videosGrid = new views.Grid({ el: $('#videos-container > ul'), collection: videoLib });
+    // var allGrid = new views.Grid({ el: $('#complete-collection-container > ul'), collection: filmLib });
 
     //
     filmLib.on('add remove change', function(model) {
@@ -75,7 +69,7 @@ window.onload = function() {
     //     });
     // });
 
-    while (Settings.isReady == false) {
+    /*while (Settings.isReady == false) {
         console.debug('waiting');
     }
 
@@ -91,6 +85,7 @@ window.onload = function() {
             // close to null probability
             console.error(err);
         });
+    */
 }
 
 

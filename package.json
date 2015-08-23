@@ -8,6 +8,8 @@
     "async": "^1.4.1",
     "backbone": "^1.2.1",
     "backbone.marionette": "^2.4.2",
+    "classnames": "^2.1.3",
+    "defaultcss": "^1.1.1",
     "jquery": "^2.1.1",
     "nedb": "^1.1.2",
     "node-ffprobe": "^1.2.2",
@@ -15,6 +17,7 @@
     "react-tools": "^0.13.3",
     "request": "^2.60.0",
     "titlebar": "^1.1.0",
+    "titlebar-react": "^2.0.0",
     "underscore-plus": "^1.6.6"
   },
   "devDependencies": {

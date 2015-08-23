@@ -3,6 +3,7 @@
 var
     App = {},
     db = {},
+    rviews = {},
     collections = {},
     views = {},
     models = {},

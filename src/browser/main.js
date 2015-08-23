@@ -51,7 +51,7 @@ app.on('ready', function() {
     });
 
     mainWin.loadUrl(path.join('file://', __dirname, '..', 'index.html'));
-    //mainWin.openDevTools();
+    mainWin.openDevTools();
 
     mainWin.on('closed', function() {
         mainWin = null;
