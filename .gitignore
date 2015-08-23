@@ -29,6 +29,7 @@ node_modules
 *.db
 bin
 main.css
+src/build
 downloads
 
 # OS X
