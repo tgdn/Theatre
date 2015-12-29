@@ -7,6 +7,7 @@ var fs = require('fs');
 var path = require('path');
 
 var titlebar = require('titlebar')();
+var Menu = remote.require('menu');
 var appmenu_template = require('./menus').appmenu_template;
 
 var appRoot = './';
@@ -14,14 +15,17 @@ var isFullscreen = false;
 
 window.onload = function() {
 
+    var appmenu = Menu.buildFromTemplate(appmenu_template);
+    Menu.setApplicationMenu(appmenu);
+
     $('body').addClass(process.platform);
 
     //App.WindowData = new models.Window
     //App.Window = new views.Window({ model: App.WindowData });
 
-    React.render(
+    var rwin = React.render(
         React.createElement(rviews.Window),
-        document.getElementById('content')
+        document.getElementById('main-window-region')
     );
 
     /*
