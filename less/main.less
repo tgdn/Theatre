@@ -312,6 +312,34 @@ ul.dropdown-menu:after {
         }
     }
 
+    // special styling for the settings' cog
+    #header .tabs-list > li.settings-tab-list-item {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        & > a {
+            // override tab styling
+            padding-left: 14px;
+            padding-right: 14px;
+            border-color: transparent;
+
+            &[aria-expanded=true] {
+                color: #fff;
+                // add a nice little glow effect on the cog
+                text-shadow: 0 0 10px #9BC6FF;
+            }
+        }
+    }
+
+    #header > ul.header-nav > li.settings-ghost-list-item {
+        width: 40px;
+        height: 10px;
+        background: transparent;
+        visibility: hidden;
+        opacity: 0;
+    }
+
 }
 
 /*#header {
@@ -430,13 +458,13 @@ ul.dropdown-menu:after {
     min-height: 30px;
 }
 
-.grid-container {
+.tab-container {
     height: 100%;
     //width: calc(100% - 5px);
     position: fixed;
     top: 44px;
     left: 0;
-    text-align: center;
+    //text-align: center;
     overflow-x: hidden;
     overflow-y: overlay;
     -webkit-overflow-scrolling: touch;
@@ -571,13 +599,15 @@ ul.video-grid li.film-row {
     }
 }
 
-.settings-view {
-    width: 90%;
-    height: 100%;
-    position: relative;
+.view-default {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    /*height: 100%;
+    position: relative;*/
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 40px;
+    //padding-bottom: 40px;
 
     .btn-close {
         font-size: 12px;
