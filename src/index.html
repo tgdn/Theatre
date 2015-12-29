@@ -17,22 +17,23 @@
             var _ = require('underscore-plus');
             var Backbone = require('backbone');
 
-            $("document").on("dragover", function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                $(this).addClass('dragging');
+            window.addEventListener("dragover", function(e) {
+                $("body").addClass('dragging');
+                e.stopPropagation();
+                e.preventDefault();
             });
 
-            $("document").on("dragleave", function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                $(this).removeClass('dragging');
+            window.addEventListener("dragleave", function(e) {
+                $("body").removeClass('dragging');
+                e.stopPropagation();
+                e.preventDefault();
             });
 
-            $("document").on("drop", function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                alert("Dropped!");
+
+            window.addEventListener("drop", function(e) {
+                var files = e.dataTransfer.files;
+                console.debug(files);
+                e.preventDefault();
             });
 
         </script>
@@ -42,7 +43,7 @@
                 width: calc(100% - 82px);
             }
 
-            .grid-container {
+            .tab-container {
                 width: calc(100% - 1px);
             }
 
@@ -74,6 +75,7 @@
 
         <!-- React -->
         <script type="text/javascript" charset="utf-8" src="build/header.js"></script>
+        <script type="text/javascript" charset="utf-8" src="build/tabarea.js"></script>
         <script type="text/javascript" charset="utf-8" src="build/window.js"></script>
 
         <!-- Backbone views -->
@@ -91,27 +93,7 @@
         <!-- Backbone collections -->
         <script type="text/javascript" charset="utf-8" src="collections/collections.js"></script>
 
-        <div class="main-window-region">
-
-            <div id="titlebar"></div>
-
-            <div id="content">
-
-                <div role="tabpanel" class="grid-container active" id="movies-container">
-                    <ul class="video-grid"></ul>
-                </div>
-
-                <div role="tabpanel" class="grid-container" id="videos-container">
-                    <ul class="video-grid"></ul>
-                </div>
-
-                <div role="tabpanel" class="grid-container" id="complete-collection-container">
-                    <ul class="video-grid"></ul>
-                </div>
-
-            </div>
-
-        </div>
+        <div class="main-window-region" id="main-window-region"></div>
 
         <script src="./index.js" charset="utf-8"></script>
     </body>
